@@ -75,40 +75,36 @@
         </form>
     </div>
 
-       <!-- CONEXIÓN A FIREBASE (Usando la versión simplificada para Web) -->
+    <!-- CONEXIÓN A FIREBASE OPTIMIZADA PARA GITHUB PAGES -->
     <script type="module">
-        // 1. Importar los módulos necesarios de Firebase desde la web (CORREGIDO AQUÍ)
+        // 1. Importar los módulos usando un proveedor de contenido global (CDN) compatible con la nube
         import { initializeApp } from "https://gstatic.com";
         import { getDatabase, ref, push } from "https://gstatic.com";
 
-        // 2. CONFIGURACIÓN DE TU PROYECTO 
-const firebaseConfig = {
-  apiKey: "AIzaSyDaGBu5IDFufc2oI6aP3Djlo5M9wbOqFq8",
-  authDomain: "registroestudiantes-c2b49.firebaseapp.com",
-  databaseURL: "https://registroestudiantes-c2b49-default-rtdb.firebaseio.com",
-  projectId: "registroestudiantes-c2b49",
-  storageBucket: "registroestudiantes-c2b49.firebasestorage.app",
-  messagingSenderId: "13690814290",
-  appId: "1:13690814290:web:72776d2de4a82ff463848b"
-};
+        // 2. CONFIGURACIÓN DE TU PROYECTO
+        const firebaseConfig = {
+            apiKey: "AIzaSyDaGBu5IDFufc2oI6aP3Djlo5M9wbOqFq8",
+            authDomain: "://firebaseapp.com",
+            databaseURL: "https://firebaseio.com",
+            projectId: "registroestudiantes-c2b49",
+            storageBucket: "registroestudiantes-c2b49.firebasestorage.app",
+            messagingSenderId: "13690814290",
+            appId: "1:13690814290:web:72776d2de4a82ff463848b"
+        };
 
         // 3. Inicializar Firebase y la Base de Datos
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
 
-
         // 4. Capturar el evento del formulario con JavaScript
         document.getElementById('formularioAlumno').addEventListener('submit', function(e) {
             e.preventDefault(); // Evita que la página se recargue
 
-            // Obtener los valores que escribió el estudiante
             const nombreAlumno = document.getElementById('nombre').value;
             const codigoAlumno = document.getElementById('codigo').value;
 
-            // Definir en qué "carpeta" o nodo de la base de datos se guardará (ej. "alumnos")
             const alumnosRef = ref(database, 'alumnos');
 
-            // Enviar los datos a la nube
             push(alumnosRef, {
                 nombre: nombreAlumno,
                 codigo: codigoAlumno,
@@ -116,10 +112,11 @@ const firebaseConfig = {
             })
             .then(() => {
                 alert("¡Datos guardados con éxito en la nube!");
-                document.getElementById('formularioAlumno').reset(); // Limpiar formulario
+                document.getElementById('formularioAlumno').reset();
             })
             .catch((error) => {
                 alert("Error al guardar: " + error.message);
+                console.error(error);
             });
         });
     </script>
